@@ -94,7 +94,7 @@ class WomenHome(DataMixin,ListView):
     }
 
     def get_queryset(self):
-        return Women.published.all().select_related('cat')
+        return Women.published.all().select_related('cat', 'author')
 
     # def get_context_data(self, **kwargs):
     #     context= super().get_context_data(**kwargs)
@@ -107,7 +107,7 @@ class WomenHome(DataMixin,ListView):
 
 @login_required
 def about(request):
-    contact_list = Women.published.all()
+    contact_list = Women.published.all().select_related('cat', 'author')
     paginator = Paginator(contact_list,3)
 
     page_number = request.GET.get('page')
@@ -234,7 +234,7 @@ class WomenCategory(DataMixin,ListView):
     allow_empty = False
 
     def get_queryset(self):
-        return Women.published.filter(cat__slug=self.kwargs['cat_slug']).select_related('cat')
+        return Women.published.filter(cat__slug=self.kwargs['cat_slug']).select_related('cat','author')
     
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)
@@ -271,7 +271,7 @@ class TagCategory(DataMixin,ListView):
 
     def get_queryset(self):
         self.tag = get_object_or_404(TagPost, slug=self.kwargs['tag_slug'])
-        return self.tag.tags.filter(is_published=Women.Status.PUBLISHED).select_related('cat')
+        return self.tag.tags.filter(is_published=Women.Status.PUBLISHED).select_related('cat', 'author')
 
 
     def get_context_data(self, **kwargs):
