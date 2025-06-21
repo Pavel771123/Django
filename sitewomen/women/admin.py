@@ -52,6 +52,9 @@ class WomenAdmin(admin.ModelAdmin):
     def set_draft(self,request,queryset):
         count = queryset.update(is_published=Women.Status.DRAFT)
         self.message_user(request,f"{count} записей снято в публикации", messages.WARNING)
+    
+
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
