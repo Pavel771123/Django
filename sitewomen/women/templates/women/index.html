@@ -3,11 +3,13 @@
 {% block content %}
 <ul class="list-articles">
     {% for p in posts %}
-    <li>
-        <div class="article-panel">
-            <p class="first">Категория: {{ p.cat.name }} | автор: {{p.author.username| default:"неизвестен"}}</p>
+    <div class="article-panel">
+            <p class="first">Категория: {{ p.cat.name }} | автор: {{ p.author.username|default:"неизвестен" }}</p>
             <p class="last">Дата: {{ p.time_update|date:"d-m-Y H:i:s" }}</p>
         </div>
+<li class="preview-card">
+    <a href="{{ p.get_absolute_url }}" class="card-link">
+        
 
         {% if p.photo %}
             <p><img class="img-article-left thumb" src="{{ p.photo.url }}"></p>
@@ -20,25 +22,32 @@
         {% endautoescape %}
 
         <div class="clear"></div>
-        <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
-    </li>
-    {% endfor %}
+
+        <div class="read-more-container">
+            <div class="read-more-btn">Читать пост</div>
+        </div>
+    </a>
+</li>
+
+{% endfor %}
+
 </ul>
 {% endblock %}
 
 
+
 {% block navigation %}
-{% if page_obj.has_other_pages %}
+{% if page_obj.has_other_pages %} <!-- проверка есть ли другие страницы-->
 <nav class="list-pages">
     <ul>
-        {% if page_obj.has_previous %}
+        {% if page_obj.has_previous %}<!-- рисуем стрелочку влево-->
         <li class="page-num">
             <a href="?page={{page_obj.previous_page_number}}">&lt;</a>
         </li>
         {% endif %}
-        {% with lower=page_obj.number|add:"-2" upper=page_obj.number|add:"2" %}
+        {% with lower=page_obj.number|add:"-2" upper=page_obj.number|add:"2" %}<!-- делает правильное отображение пагинации-->
             {% for p in paginator.page_range %}
-                {% if p == page_obj.number %}
+                {% if p == page_obj.number %}<!-- делает некликабельным номер страницы-->
                     <li class="page-num page-num-selected">{{ p }}</li>
                 {% elif p >= lower and p <= upper %}
                     <li class="page-num">
@@ -47,7 +56,7 @@
                 {% endif %}
             {% endfor %}
         {% endwith %}
-        {% if page_obj.has_next %}
+        {% if page_obj.has_next %}<!-- рисуем стрелочку вправо-->
         <li class="page-num">
             <a href="?page={{page_obj.next_page_number}}">&gt;</a>
         </li>

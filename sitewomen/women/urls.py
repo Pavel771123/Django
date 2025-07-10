@@ -13,6 +13,9 @@ urlpatterns = [
     path('category/<slug:cat_slug>/', views.WomenCategory.as_view(), name='category'),
     path('tag/<slug:tag_slug>/', views.TagCategory.as_view(), name='tag'),
     path('edit/<int:pk>/', views.UpdatePage.as_view(), name='editpage'),
+    path('edit/<slug:post_slug>/', views.UpdatePage.as_view(), name='editpage'),
     path('delete/<int:pk>/', views.WomenDeleteView.as_view(), name='deletepage'),
 
 ]
+
+

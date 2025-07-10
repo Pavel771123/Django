@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.urls import reverse, reverse_lazy
 from django.template.loader import render_to_string
@@ -9,7 +9,6 @@ from django.views.generic import TemplateView, ListView, DetailView,FormView, Cr
 
 from .utils import DataMixin
 from .forms import AddPostForm, UploadFileForm
-from datetime import datetime
 from django.core.paginator import Paginator
 
 from .models import Category, TagPost, UploadFiles, Women
@@ -75,7 +74,7 @@ def about(request):
 class AddPage(LoginRequiredMixin, CreateView):
     form_class = AddPostForm
     template_name = 'women/addpage.html'
-    success_url = reverse_lazy('home')
+    # success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         w = form.save(commit=False)
@@ -88,13 +87,16 @@ class AddPage(LoginRequiredMixin, CreateView):
     }
     
 
-class UpdatePage(DataMixin,UpdateView):
+class UpdatePage(PermissionRequiredMixin, DataMixin,UpdateView):
     model= Women
     fields = ['title', 'content', 'photo', 'is_published', 'cat']
     template_name = 'women/addpage.html'
     success_url = reverse_lazy('home')
     title_page = 'Добавление статьи'
+    permission_required = 'women.add_women'
     
+    slug_field = 'slug'  # ← какое поле использовать как slug
+    slug_url_kwarg = 'post_slug'  # ← как называется параметр в path()
 
     def form_valid(self, form):
         form.save()

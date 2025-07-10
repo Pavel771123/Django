@@ -21,4 +21,7 @@
     <p><a href="{% url 'users:password_reset' %}">Забыли пароль</a></p>
 </form>
 
+<hr>
+<p><a href="{% url 'social:begin' 'github' %}" class="github-login-button"><img src='/media/social-auth/github.png' alt="Вход через GitHub"></a></p>
+
 {% endblock %}

@@ -3,8 +3,13 @@
 {% block content %}
 <h1>Профиль</h1>
 
-<form method="post">
+<form method="post"  enctype="multipart/form-data">
     {% csrf_token %}
+    {% if user.photo %}
+    <p><img src="{{ user.photo.url }}">
+    {% else %}
+    <p><img src='{{default_image}}'>
+    {% endif %}
     <input type="hidden" name="next" value="{{ next }}" />
     {% if form.non_field_errors %}
     <div class="form-error">
@@ -19,7 +24,8 @@
     {% endfor f %}
     <p><button type="submit">Сохранить</button></p>
 </form>
-
+{% if not user.social_auth.exists %}
 <hr>
 <p><a href="{% url 'users:password_change' %}">Сменить пароль</a></p>
+{% endif %}
 {% endblock %}
