@@ -20,3 +20,5 @@ media/
 *.pot
 *.py[cod]
 *$py.class
+
+sitewomen/db.json
