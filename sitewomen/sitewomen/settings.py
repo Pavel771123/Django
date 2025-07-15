@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'debug_toolbar',
     'social_django',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -83,8 +84,12 @@ WSGI_APPLICATION = 'sitewomen.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sitewomen_db',
+        'USER': 'sitewomen',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': 5432,
     }
 }
 

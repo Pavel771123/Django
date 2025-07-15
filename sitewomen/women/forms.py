@@ -3,7 +3,7 @@ from .models import Husband, Category, Women
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
-
+from captcha.fields import CaptchaField
 
 @deconstructible
 class RussianValidator:
@@ -45,3 +45,9 @@ class AddPostForm(forms.ModelForm):
     
 class UploadFileForm(forms.Form):
     file = forms.FileField(label='Файл')
+
+class ContactForm(forms.Form):
+    name = forms.CharField(label='Имя', max_length=255)
+    email = forms.EmailField(label='Email')
+    content = forms.CharField(widget=forms.Textarea(attrs={'cols':60, 'rows': 10}))
+    captcha = CaptchaField()
