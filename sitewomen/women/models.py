@@ -19,7 +19,7 @@ def translit_to_eng(s: str)-> str:
     return "".join(map(lambda x:d[x] if d.get(x, False) else x , s.lower()))
 
 
-class PublishedManager(models.Manager):
+class PublishedManager(models.Manager): # Менеджер 
     def get_queryset(self):
         return super().get_queryset().filter(is_published=Women.Status.PUBLISHED)
     
