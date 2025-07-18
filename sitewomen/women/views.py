@@ -40,8 +40,6 @@ class ShowPost(DataMixin,DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(Women.objects.all(), slug=self.kwargs[self.slug_url_kwarg])
 
-def index(request):
-    return HttpResponse('Страница приложения women.')
 
 
 
