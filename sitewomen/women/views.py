@@ -53,6 +53,10 @@ class WomenHome(DataMixin,ListView):
     def get_queryset(self):
         return Women.published.all().select_related('cat', 'author')
 
+    extra_context =  {
+        'cats': Category.objects.all(),
+               
+    }
 
 
 @login_required
@@ -175,4 +179,4 @@ class TagCategory(DataMixin,ListView):
         return self.get_mixin_context(context,title = 'Тег ' + tag.tag)
         
 
-    
+   

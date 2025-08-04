@@ -26,5 +26,5 @@ class DataMixin:
         return context
 
 
-    paginate_by = 3
+    paginate_by = 4
     

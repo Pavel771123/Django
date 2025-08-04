@@ -10,6 +10,7 @@ db.sqlite3
 
 # Папки VSCode и другие IDE
 .vscode/
+.env
 
 # Игнорируем только сгенерированный collectstatic, но НЕ наши стили
 /staticfiles/
